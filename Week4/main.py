@@ -1,3 +1,61 @@
+import random
+
+user_pick = input("Enter rock, paper, or scissors")
+
+if user_pick not in ("rock", "paper", "scissors"):
+    print("Dummy try again")
+    exit() # hard stop and quit
+
+
+
+
+random_number = random.randint(1,100)
+
+guess = int(input("Guess a number 1-100"))
+
+if guess < random_number:
+    print("too low!")
+elif guess > random_number:
+    print("too high!")
+else:
+    print("You got it!")
+
+
+
+
+
+hourly_pay_rate = float(input("Enter your hourly pay rate: "))
+hours_worked = float(input("Enter how many hours you worked this week: "))
+
+if hours_worked <= 40:
+    print(f"You made ${hours_worked * hourly_pay_rate:.2f}")
+else:
+    overtime = hours_worked - 40
+    overtime_pay = overtime * hourly_pay_rate * 1.5
+    regular_pay = hourly_pay_rate * 40
+    print(f"You made ${overtime_pay + regular_pay:.2f}")
+
+
+users_throw = int(input("Enter:\n1 - rock\n2 - paper\n3 - scissors\n"))
+computers_throw = random.randint(1,3) # inclusive of both ends
+
+if computers_throw == 1:
+    print("Computer throws Rock!")
+elif computers_throw == 2:
+    print("Computer throws Paper!")
+else:
+    print("Computer throws Scissors!")
+
+if users_throw == computers_throw:
+    print("Tie!")
+elif ( users_throw == 1 and computers_throw == 3 ) \
+    or ( users_throw == 2 and computers_throw == 1 ) \
+    or ( users_throw == 3 and computers_throw == 2 ):
+    print("You win!")
+else:
+    print("You lose!")
+
+
 money = float(input("How much money do you have "))
 lunch = ""
 
