@@ -1,5 +1,72 @@
 import random
 
+
+total = 0
+receipt = float(input("Enter a receipt value to total or 0 to stop: "))
+while receipt != 0:
+    total += receipt
+    receipt = float(input("Enter a receipt value to total or 0 to stop: "))
+else:
+    print(f"Total ${total}")
+
+total = 0
+receipt = float(input("Enter a receipt value to total or 0 to stop: "))
+while True:
+    total += receipt
+    receipt = float(input("Enter a receipt value to total or 0 to stop: "))
+    if receipt == 0:
+        break
+else: # won't run if you use break
+    print(f"Total ${total}")
+
+
+
+size = int(input("What size square?"))
+
+for row in range(size):
+    print("*" * size)
+
+
+length = int(input("enter the length: "))
+height = int(input("Enter the height: "))
+
+for row in range(height):
+    print("*" * length)
+
+height = int(input("Enter the height of your right angle triangle: "))
+
+for length in range(1,height+1):
+    print("*" * length)
+
+for length in range(1,height+1):
+    print(f'{" " * (height - length)}{"*" * length}')
+
+
+base = 0
+while base % 2 != 1: # while the remainder isn't 1
+    base = int(input("Enter an odd number base for an equilateral triangle"))
+
+
+spaces = base // 2
+stars = 1
+
+while stars <= base:
+    print(f"{" "*spaces}{"*"*stars}")
+    stars += 2
+    spaces -= 1
+
+# undoing the last change
+stars -= 2
+spaces += 1
+
+while stars >= 1:
+    stars -= 2
+    spaces += 1
+    print(f"{" " * spaces}{"*" * stars}")
+
+
+
+
 number_of_samples = int(input("Enter the number of times to roll: "))
 sides_on_die = int(input("how many sides are on your die? "))
 how_many_rolls_to_sum = int(input("How many times are you rolling to sum: "))
@@ -15,6 +82,13 @@ for roll in range(number_of_samples):
 for index in range(how_many_rolls_to_sum,len(roll_count)):
     percentage = int(roll_count[index] / number_of_samples * 100)
     print(f'{index:02d}: {'*' * percentage}')
+
+for index, value in enumerate(roll_count):
+    if index < how_many_rolls_to_sum:
+        continue
+    percentage = int(value / number_of_samples * 100)
+    print(f'{index:02d}: {'*' * percentage}')
+
 
 print(roll_count)
 
