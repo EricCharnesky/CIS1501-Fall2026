@@ -1,4 +1,4 @@
-
+import random
 
 def get_option_from_list_lower_case(list):
     choice = ""
@@ -7,25 +7,31 @@ def get_option_from_list_lower_case(list):
     return choice
 
 def get_random_value_negative_10_to_positive_10():
-    # FIXME
-    return 0
+    value = random.randint(-10, 10)
+    return value
 
-def self_destruct():
-    pass
+def self_destruct(current_distance):
+    cancelation_code = ""
+    while current_distance != 1 and cancelation_code != "CANCEL":
+        cancelation_code = input("Self destruct active, please enter cancelation code: ")
+        current_distance -= 1
+    return current_distance, cancelation_code == "CANCEL"
 
 def check_for_crash(tilt):
-    # FIXME
-    return True
+    # 0 is false, everyting else is true
+    return tilt
 
 def get_closer_to_surface_and_check_for_crash(current_distance, x_tilt, y_tilt):
-    # FIXME
-    if check_for_crash(x_tilt) or check_for_crash(y_tilt):
+    current_distance -= 1
+
+    if current_distance == 0 and \
+        ( check_for_crash(x_tilt) or check_for_crash(y_tilt) ):
         print("CRASH")
 
     return current_distance
 
 yes_or_no_choices = ('yes', 'no')
-valid_commands = ("thrusters", "self destruct", 'x tilt +')
+valid_commands = ("thrusters", "self destruct", 'x+', 'x-', 'y+', 'y-', 'nothing')
 
 while get_option_from_list_lower_case(yes_or_no_choices) == 'yes':
     x_tilt = get_random_value_negative_10_to_positive_10()
@@ -35,12 +41,25 @@ while get_option_from_list_lower_case(yes_or_no_choices) == 'yes':
 
     is_self_destruct_mode_active = False
 
-    command = get_option_from_list_lower_case(valid_commands)
+    while current_distance > 0:
+        print(f'Distance: {current_distance} - X tilt: {x_tilt} - Y tilt {y_tilt} ')
+        command = get_option_from_list_lower_case(valid_commands)
 
-    if command == "self destruct":
-        self_destruct()
-        is_self_destruct_mode_active = True
+        if command == "self destruct":
+            current_distance, cancelled = self_destruct(current_distance)
+            is_self_destruct_mode_active = not cancelled
+        elif command == "x-":
+            x_tilt -= 1
+        elif command == "x+":
+            x_tilt += 1
+        elif command == "y-":
+            y_tilt -= 1
+        elif command == "y+":
+            y_tilt += 1
+        elif command == "thrusters":
+            current_distance += 2
 
-    current_distance = get_closer_to_surface_and_check_for_crash(current_distance, x_tilt, y_tilt)
+        current_distance = get_closer_to_surface_and_check_for_crash(current_distance, x_tilt, y_tilt)
 
-
+    if x_tilt == 0 and y_tilt == 0 and not is_self_destruct_mode_active:
+        print("successfully landed!")
