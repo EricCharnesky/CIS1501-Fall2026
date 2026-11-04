@@ -75,11 +75,12 @@ class TestChair(TestCase):
 
     def test_set_minimum_height_in_cm_doesnt_go_below_zero(self):
         # Arrange
-        expected_min = 0
+        expected_min = 10
         chair = Chair(10, 50, 2)
 
-        # Act
-        chair.set_minimum_height_in_cm(-10)
+        # Act - https://stackoverflow.com/questions/3877134/testing-in-python-how-can-i-use-assertraises-in-testing-using-unittest
+        # type of exception, function to call, argument to provide
+        self.assertRaises(ValueError, chair.set_minimum_height_in_cm, -10)
         actual_min = chair.get_minimum_height_in_cm()
 
         # Assert
@@ -87,23 +88,23 @@ class TestChair(TestCase):
 
     def test_set_minimum_height_in_cm_doesnt_go_above_max(self):
         # Arrange
-        expected_min = 50
+        expected_min = 10
         chair = Chair(10, 50, 2)
 
         # Act
-        chair.set_minimum_height_in_cm(100)
+        self.assertRaises(ValueError, chair.set_minimum_height_in_cm, 100)
         actual_min = chair.get_minimum_height_in_cm()
 
         # Assert
         self.assertEqual(expected_min, actual_min)
 
-    def test_set_minimum_height_updates_current(self):
+    def test_set_minimum_height_above_current_raises_exception(self):
         # Arrange
-        expected_current = 50
+        expected_current = 10
         chair = Chair(10, 50, 2)
 
         # Act
-        chair.set_minimum_height_in_cm(50)
+        self.assertRaises(ValueError, chair.set_minimum_height_in_cm, 25)
         actual_height = chair.get_height_in_cm()
 
         # Assert
